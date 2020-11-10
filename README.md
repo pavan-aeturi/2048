@@ -5,7 +5,7 @@ We're using python alongside with pygame for GUI. We're implementing the 2048 ga
 
 In linux ubuntu distro:
 
-make sure you have installed pyhton3 and pip3
+make sure you have installed python3 and pip3
 
 Download and browse to downloaded directory in terminal
 
