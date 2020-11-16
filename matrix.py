@@ -85,15 +85,24 @@ class matrix():
 				if self.mtx[i][j]==0:
 					return True
 		return False
-
+	def checkEqualConsecutiveTiles(self):
+		for i in range(4):
+			for j in range(3):
+				if self.mtx[i][j]==self.mtx[i][j+1]:
+					return True
+		for i in range(4):
+			for j in range(3):
+				if self.mtx[j][i]==self.mtx[j+1][i]:
+					return True
+		return False
 	def checkAddandUpdate(self,win):
 		self.maxTileNum()
 		if self.emptyAvailable() and self.maxTileVal!=1024:
 			self.add_new_tile()
 			self.updateGui(win)
 		else:
-			self.gameover=True
-			self.winner=(self.maxTileVal==1024)
+			self.gameover=((not self.checkEqualConsecutiveTiles()) or self.maxTileVal==1024)
+			self.winner=self.maxTileVal==1024
 
 	def leftMove(self,win):
 		self.stackLeft()
