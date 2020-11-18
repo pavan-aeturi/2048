@@ -11,10 +11,8 @@ class matrix():
 		self.score=0
 		self.mtx=[[0 for i in range(4)] for _ in range(4)]
 		self.tiles =[[None for i in range(4)] for _ in range(4)]
-		self.Bmem=[ None for j in range(5)]
-		self.Fcnt=0
+		self.Bmem=[ None for j in range(6)]
 		self.Bcnt=0
-		self.Fmem=[ None for _ in range(5) ]
 
 	def buildTiles(self,win):
 		for i in range(self.height):
@@ -101,32 +99,31 @@ class matrix():
 		return False
 
 	def checkAddandUpdate(self,win):
+		self.storeMoves()
 		self.maxTileNum()
 		if self.emptyAvailable() and self.maxTileVal!=1024:
 			self.add_new_tile()
 			self.updateGui(win)
 		else:
-			self.gameover=((not self.checkEqualConsecutiveTiles()) or self.maxTileVal==1024)
+			self.gameover=(not self.checkEqualConsecutiveTiles()) or (self.maxTileVal==1024)
 			self.winner=(self.maxTileVal==1024)
-
+		
+		
 	def storeMoves(self):
-		self.Bmem[(self.Bcnt)%5]=self.mtx
-		self.Bcnt=(self.Bcnt + 1)%5
+		self.Bmem[(self.Bcnt)%6]=self.mtx
+		self.Bcnt=(self.Bcnt + 1)%6
 
 	def restore(self,win):
-		if self.Bmem[(self.Bcnt-2)%5] is not None:
-			self.mtx=self.Bmem[(self.Bcnt-2)%5]
+		if self.Bmem[(self.Bcnt-2)%6] is not None:
+			self.mtx=self.Bmem[(self.Bcnt-2)%6]
 			self.updateGui(win)
-			self.FMem=self.Bmem[(self.Bcnt-1)%5]
-			self.Fcnt=(self.Fcnt+1)%5
-			self.Bmem[(self.Bcnt-1)%5]=None
-			self.Bcnt=(self.Bcnt - 1)%5
+			self.Bmem[(self.Bcnt-1)%6]=None
+			self.Bcnt=(self.Bcnt - 1)%6
 
 	def leftMove(self,win):
 		self.stackLeft()
 		self.combineLeft()
 		self.stackLeft()
-		self.storeMoves()
 		self.checkAddandUpdate(win)
 
 		
@@ -136,7 +133,6 @@ class matrix():
 		self.combineLeft()
 		self.stackLeft()
 		self.rotateHorizontal()
-		self.storeMoves()
 		self.checkAddandUpdate(win)
 
 	def upMove(self,win):
@@ -145,7 +141,6 @@ class matrix():
 		self.combineLeft()
 		self.stackLeft()
 		self.transpose()
-		self.storeMoves()
 		self.checkAddandUpdate(win)
 
 	def downMove(self,win):
@@ -156,7 +151,6 @@ class matrix():
 		self.stackLeft()
 		self.rotateHorizontal()
 		self.transpose()
-		self.storeMoves()
 		self.checkAddandUpdate(win)
 
 
