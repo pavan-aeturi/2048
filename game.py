@@ -14,7 +14,6 @@ def main():
 	Mtx.updateGui(window)
 	back_cnt=0
 	while run:
-               # print(1)
 		for event in pygame.event.get():
 			if event.type==pygame.QUIT:
 				pygame.quit()
@@ -23,34 +22,14 @@ def main():
 			if event.type==pygame.KEYDOWN:
 				if event.key==pygame.K_LEFT:
 					Mtx.leftMove(window)
-					if back_cnt<5 :
-                                                back_cnt++
-                                        else:
-                                                back_cnt=5
 				elif event.key==pygame.K_RIGHT:
 					Mtx.rightMove(window)
-					if back_cnt<5 :
-                                                back_cnt++
-                                        else:
-                                                back_cnt=5
 				elif event.key==pygame.K_UP:
 					Mtx.upMove(window)
-					if back_cnt<5 :
-                                                back_cnt++
-                                        else:
-                                                back_cnt=5
 				elif event.key==pygame.K_DOWN:
 					Mtx.downMove(window)
-					if back_cnt<5 :
-                                                back_cnt++
-                                        else:
-                                                back_cnt=5
 				elif event.key==pygame.K_SPACE:
-                                        if back_cnt<=0:
-                                                print("max steps reached")
-                                        else :
-                                                Mtx.restore(window)
-                                                back_cnt=back_cnt-1
+					Mtx.restore(window)
 
 
 	window.fill(WHITE)
@@ -83,7 +62,7 @@ def main():
 			break
 
 
-if __name__== "__main__":
+if __name__=="__main__":
 	try:
 		pygame.init()
 		window = pygame.display.set_mode((600,650))

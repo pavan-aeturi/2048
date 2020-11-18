@@ -11,8 +11,10 @@ class matrix():
 		self.score=0
 		self.mtx=[[0 for i in range(4)] for _ in range(4)]
 		self.tiles =[[None for i in range(4)] for _ in range(4)]
-		self.mem=[[[0 for i in range(4)] for _ in range(4)] for j in range(5)]
-		self.cnt=0
+		self.Bmem=[ None for j in range(5)]
+		self.Fcnt=0
+		self.Bcnt=0
+		self.Fmem=[ None for _ in range(5) ]
 
 	def buildTiles(self,win):
 		for i in range(self.height):
@@ -97,6 +99,7 @@ class matrix():
 				if self.mtx[j][i]==self.mtx[j+1][i]:
 					return True
 		return False
+
 	def checkAddandUpdate(self,win):
 		self.maxTileNum()
 		if self.emptyAvailable() and self.maxTileVal!=1024:
@@ -104,28 +107,26 @@ class matrix():
 			self.updateGui(win)
 		else:
 			self.gameover=((not self.checkEqualConsecutiveTiles()) or self.maxTileVal==1024)
-			self.winner=self.maxTileVal==1024
-			
-        def storeMoves(self):
-                for i in range(4):
-                        for j in range(4):
-                                mem[cnt%5][i][j]=self.mtx[i][j]
-                cnt=cnt+1
-                
-        def restore(self,win): 
-                nmtx=[[0 for i in range(4) ] for _ in range(4)]
-                self.cnt=self.cnt-1
-                for i in range(4):
-                        for j in range(4):
-                                nmtx[i][j]=self.mem[cnt%5][i][j]
-                self.mtx=nmtx
-                self.updateGui()
+			self.winner=(self.maxTileVal==1024)
+
+	def storeMoves(self):
+		self.Bmem[(self.Bcnt)%5]=self.mtx
+		self.Bcnt=(self.Bcnt + 1)%5
+
+	def restore(self,win):
+		if self.Bmem[(self.Bcnt-2)%5] is not None:
+			self.mtx=self.Bmem[(self.Bcnt-2)%5]
+			self.updateGui(win)
+			self.FMem=self.Bmem[(self.Bcnt-1)%5]
+			self.Fcnt=(self.Fcnt+1)%5
+			self.Bmem[(self.Bcnt-1)%5]=None
+			self.Bcnt=(self.Bcnt - 1)%5
 
 	def leftMove(self,win):
 		self.stackLeft()
 		self.combineLeft()
 		self.stackLeft()
-                storeMoves()
+		self.storeMoves()
 		self.checkAddandUpdate(win)
 
 		
@@ -135,7 +136,7 @@ class matrix():
 		self.combineLeft()
 		self.stackLeft()
 		self.rotateHorizontal()
-		storeMoves()
+		self.storeMoves()
 		self.checkAddandUpdate(win)
 
 	def upMove(self,win):
@@ -144,7 +145,7 @@ class matrix():
 		self.combineLeft()
 		self.stackLeft()
 		self.transpose()
-		storeMoves()
+		self.storeMoves()
 		self.checkAddandUpdate(win)
 
 	def downMove(self,win):
@@ -155,7 +156,7 @@ class matrix():
 		self.stackLeft()
 		self.rotateHorizontal()
 		self.transpose()
-		storeMoves()
+		self.storeMoves()
 		self.checkAddandUpdate(win)
 
 
