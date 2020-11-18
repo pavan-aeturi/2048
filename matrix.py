@@ -11,6 +11,8 @@ class matrix():
 		self.score=0
 		self.mtx=[[0 for i in range(4)] for _ in range(4)]
 		self.tiles =[[None for i in range(4)] for _ in range(4)]
+		self.mem=[[[0 for i in range(4)] for _ in range(4)] for j in range(5)]
+		self.cnt=0
 
 	def buildTiles(self,win):
 		for i in range(self.height):
@@ -103,11 +105,27 @@ class matrix():
 		else:
 			self.gameover=((not self.checkEqualConsecutiveTiles()) or self.maxTileVal==1024)
 			self.winner=self.maxTileVal==1024
+			
+        def storeMoves(self):
+                for i in range(4):
+                        for j in range(4):
+                                mem[cnt%5][i][j]=self.mtx[i][j]
+                cnt=cnt+1
+                
+        def restore(self,win): 
+                nmtx=[[0 for i in range(4) ] for _ in range(4)]
+                self.cnt=self.cnt-1
+                for i in range(4):
+                        for j in range(4):
+                                nmtx[i][j]=self.mem[cnt%5][i][j]
+                self.mtx=nmtx
+                self.updateGui()
 
 	def leftMove(self,win):
 		self.stackLeft()
 		self.combineLeft()
 		self.stackLeft()
+                storeMoves()
 		self.checkAddandUpdate(win)
 
 		
@@ -117,6 +135,7 @@ class matrix():
 		self.combineLeft()
 		self.stackLeft()
 		self.rotateHorizontal()
+		storeMoves()
 		self.checkAddandUpdate(win)
 
 	def upMove(self,win):
@@ -125,6 +144,7 @@ class matrix():
 		self.combineLeft()
 		self.stackLeft()
 		self.transpose()
+		storeMoves()
 		self.checkAddandUpdate(win)
 
 	def downMove(self,win):
@@ -135,6 +155,7 @@ class matrix():
 		self.stackLeft()
 		self.rotateHorizontal()
 		self.transpose()
+		storeMoves()
 		self.checkAddandUpdate(win)
 
 
