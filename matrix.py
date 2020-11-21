@@ -1,6 +1,13 @@
 from box import Tile
 import pygame
 import random
+
+class memory():
+	def __init__(self,mtx,score):
+		self.mtx=mtx
+		self.score=score
+
+
 class matrix():
 	def __init__(self,dimX=4,dimY=4):
 		self.length=dimX
@@ -110,12 +117,13 @@ class matrix():
 		
 		
 	def storeMoves(self):
-		self.Bmem[(self.Bcnt)%6]=self.mtx
+		self.Bmem[(self.Bcnt)%6]=memory(self.mtx,self.score)
 		self.Bcnt=(self.Bcnt + 1)%6
 
 	def restore(self,win):
 		if self.Bmem[(self.Bcnt-2)%6] is not None:
-			self.mtx=self.Bmem[(self.Bcnt-2)%6]
+			self.mtx=self.Bmem[(self.Bcnt-2)%6].mtx
+			self.score=self.Bmem[(self.Bcnt-2)%6].score
 			self.updateGui(win)
 			self.Bmem[(self.Bcnt-1)%6]=None
 			self.Bcnt=(self.Bcnt - 1)%6

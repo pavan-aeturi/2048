@@ -72,10 +72,9 @@ def main(score,HighestScore,window):
 				elif event.key==pygame.K_DOWN:
 					Mtx.downMove(window)
 				elif event.key==pygame.K_SPACE:
-					Mtx.restore(window)
-			if score.Number<(Mtx.score):
-				score.Number=Mtx.score
-				score.draw(window)
+					Mtx.restore(window)	
+			score.Number=Mtx.score
+			score.draw(window)
 	return EndorContinueGame(HighestScore,Mtx,window)
 
 
