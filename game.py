@@ -53,9 +53,11 @@ def main(score,HighestScore,nextBestMove,window):
 	Mtx=matrix()
 	Mtx.buildTiles(window)
 	Mtx.checkAddandUpdate(window)
+	Mtx.bestMove()
 	score.Number=0
 	score.draw(window)
 	HighestScore.draw(window)
+	nextBestMove.draw(window)
 	back_cnt=0
 	while run:
 		for event in pygame.event.get():
@@ -75,7 +77,9 @@ def main(score,HighestScore,nextBestMove,window):
 				elif event.key==pygame.K_SPACE:
 					Mtx.restore(window)
 			score.Number=Mtx.score
+			nextBestMove.Number=Mtx.nextBestMove
 			score.draw(window)
+			nextBestMove.draw(window)
 			
 		
 	return EndorContinueGame(HighestScore,Mtx,window)
