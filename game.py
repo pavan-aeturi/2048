@@ -53,6 +53,7 @@ def main(score,HighestScore,nextBestMove,window):
 	Mtx=matrix()
 	Mtx.buildTiles(window)
 	Mtx.checkAddandUpdate(window)
+	Mtx.checkAddandUpdate(window)
 	Mtx.bestMove()
 	score.Number=0
 	score.draw(window)
