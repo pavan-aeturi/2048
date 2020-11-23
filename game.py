@@ -37,15 +37,16 @@ def EndorContinueGame(HighestScore,Mtx,window):
 			return False
 
 def initialiseScoreBoard(window):
-	score=displayBlock(270,85,50,100,[232, 221, 211],"SCORE",WHITE,0,[187, 173, 160],20)
-	HighestScore=displayBlock(380,85,50,100,[232, 221, 211],"BEST",WHITE,0,[187, 173, 160],20)
-	return score,HighestScore
+	nextBestMove=displayBlock(100,85,50,120,DBBLOCK_BG_COLOR,"BEST MOVE",WHITE,"L",FONT_DBCOLOR,18)
+	score=displayBlock(236,85,50,120,DBBLOCK_BG_COLOR,"SCORE",WHITE,0,FONT_DBCOLOR,20)
+	HighestScore=displayBlock(370,85,50,120,DBBLOCK_BG_COLOR,"BEST",WHITE,0,FONT_DBCOLOR,20)
+	return score,HighestScore,nextBestMove
 
-def main(score,HighestScore,window):
+def main(score,HighestScore,nextBestMove,window):
 	window.fill(WHITE)
 	Img2048=pygame.image.load('2048.png')
-	Img2048small=pygame.transform.smoothscale(Img2048,(160,70))
-	window.blit(Img2048small, (100, 75))
+	Img2048small=pygame.transform.smoothscale(Img2048,(150,60))
+	window.blit(Img2048small, (220, 10))
 	pygame.display.update()
 	pygame.draw.rect(window,EDGE_COLOR,BASE)
 	run=True
@@ -72,9 +73,11 @@ def main(score,HighestScore,window):
 				elif event.key==pygame.K_DOWN:
 					Mtx.downMove(window)
 				elif event.key==pygame.K_SPACE:
-					Mtx.restore(window)	
+					Mtx.restore(window)
 			score.Number=Mtx.score
 			score.draw(window)
+			
+		
 	return EndorContinueGame(HighestScore,Mtx,window)
 
 
@@ -85,8 +88,8 @@ if __name__=="__main__":
 		pygame.display.set_caption("2048")
 		pygame.display.update()
 		pygame.display.flip()
-		score,HighestScore=initialiseScoreBoard(window)
-		while main(score,HighestScore,window):
+		score,HighestScore,nextBestMove=initialiseScoreBoard(window)
+		while main(score,HighestScore,nextBestMove,window):
 			pass
 		pygame.quit()
 	except:

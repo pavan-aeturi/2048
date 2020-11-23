@@ -3,7 +3,7 @@ from moves import *
 
 class Tree():
 	def __init__(self,mtx):
-		self.root=Node(mtx,depth=1)
+		self.root=Node(mtx,depth=2)
 		self.presentNode=self.root
 
 	def goToparent(self):
@@ -22,6 +22,7 @@ class Tree():
 mtx=[[2,4 ,0, 0], [2,4,0,0],[0,4,0,0],[0,4,8,0]]
 tree=Tree(mtx)
 tree.goTochild('U',0)
+tree.goTochild('L',0)
 print(tree.presentNode.mtx)
 tree.goToparent()
 print(tree.presentNode.mtx)

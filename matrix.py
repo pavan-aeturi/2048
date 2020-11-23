@@ -9,6 +9,7 @@ class matrix():
 	def __init__(self,dimX=4,dimY=4):
 		self.length=dimX
 		self.height=dimY
+		self.nextBestMove='L'
 		self.gameover=False
 		self.maxTileVal=0
 		self.winner=False
@@ -98,7 +99,6 @@ class matrix():
 	def leftMove(self,win):
 		self.mtx,self.score=getLeft(self.mtx,self.score)
 		self.checkAddandUpdate(win)
-
 		
 	def rightMove(self,win):
 		self.mtx,self.score=getRight(self.mtx,self.score)
