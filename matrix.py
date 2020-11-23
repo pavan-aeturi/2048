@@ -1,11 +1,8 @@
 from box import Tile
+from Node import Node
+from moves import *
 import pygame
 import random
-
-class memory():
-	def __init__(self,mtx,score):
-		self.mtx=mtx
-		self.score=score
 
 
 class matrix():
@@ -16,6 +13,7 @@ class matrix():
 		self.maxTileVal=0
 		self.winner=False
 		self.score=0
+		self.presentNode=None
 		self.mtx=[[0 for i in range(4)] for _ in range(4)]
 		self.tiles =[[None for i in range(4)] for _ in range(4)]
 		self.Bmem=[ None for j in range(6)]
@@ -34,38 +32,6 @@ class matrix():
 
 	def changeTileNum(self,i,j,num,win):
 		self.tiles[i][j].changeNumber(num,win)
-
-	def stackLeft(self):
-		nmtx=[[0 for i in range(4) ] for _ in range(4)]
-		for i in range(4):
-			finalPos=0
-			for j in range(4):
-				if self.mtx[i][j]!=0:
-					nmtx[i][finalPos]=self.mtx[i][j]
-					finalPos+=1
-		self.mtx=nmtx
-
-	def combineLeft(self):
-		for i in range(4):
-			for j in range(3):
-				if self.mtx[i][j]!=0 and self.mtx[i][j]==self.mtx[i][j+1]:
-					self.mtx[i][j]*=2
-					self.mtx[i][j+1]=0
-					self.score+=self.mtx[i][j]
-
-	def transpose(self):
-		nmtx=[[0 for i in range(4) ] for _ in range(4)]
-		for i in range(4):
-			for j in range(4):
-				nmtx[i][j]=self.mtx[j][i]
-		self.mtx=nmtx
-
-	def rotateHorizontal(self):
-		nmtx=[[0 for i in range(4) ] for _ in range(4)]
-		for i in range(4):
-			for j in range(4):
-				nmtx[i][j]=self.mtx[i][3-j]
-		self.mtx=nmtx
 
 	def add_new_tile(self):
 		newList=[]
@@ -94,6 +60,7 @@ class matrix():
 				if self.mtx[i][j]==0:
 					return True
 		return False
+
 	def checkEqualConsecutiveTiles(self):
 		for i in range(4):
 			for j in range(3):
@@ -106,18 +73,18 @@ class matrix():
 		return False
 
 	def checkAddandUpdate(self,win):
-		self.storeMoves()
+		if self.mtx:
+			self.storeMoves()
 		self.maxTileNum()
-		if self.emptyAvailable() and self.maxTileVal!=1024:
+		if self.emptyAvailable() and self.maxTileVal!=2048:
 			self.add_new_tile()
 			self.updateGui(win)
 		else:
-			self.gameover=(not self.checkEqualConsecutiveTiles()) or (self.maxTileVal==1024)
-			self.winner=(self.maxTileVal==1024)
-		
-		
+			self.gameover=(not self.checkEqualConsecutiveTiles()) or (self.maxTileVal==2048)
+			self.winner=(self.maxTileVal==2048)
+				
 	def storeMoves(self):
-		self.Bmem[(self.Bcnt)%6]=memory(self.mtx,self.score)
+		self.Bmem[(self.Bcnt)%6]=Node(self.mtx,self.score)
 		self.Bcnt=(self.Bcnt + 1)%6
 
 	def restore(self,win):
@@ -129,37 +96,22 @@ class matrix():
 			self.Bcnt=(self.Bcnt - 1)%6
 
 	def leftMove(self,win):
-		self.stackLeft()
-		self.combineLeft()
-		self.stackLeft()
+		self.mtx,self.score=getLeft(self.mtx,self.score)
 		self.checkAddandUpdate(win)
 
 		
 	def rightMove(self,win):
-		self.rotateHorizontal()
-		self.stackLeft()
-		self.combineLeft()
-		self.stackLeft()
-		self.rotateHorizontal()
+		self.mtx,self.score=getRight(self.mtx,self.score)
 		self.checkAddandUpdate(win)
 
 	def upMove(self,win):
-		self.transpose()
-		self.stackLeft()
-		self.combineLeft()
-		self.stackLeft()
-		self.transpose()
+		self.mtx,self.score=getUp(self.mtx,self.score)
 		self.checkAddandUpdate(win)
 
 	def downMove(self,win):
-		self.transpose()
-		self.rotateHorizontal()
-		self.stackLeft()
-		self.combineLeft()
-		self.stackLeft()
-		self.rotateHorizontal()
-		self.transpose()
+		self.mtx,self.score=getDown(self.mtx,self.score)
 		self.checkAddandUpdate(win)
+
 
 
 
