@@ -2,14 +2,15 @@ from moves import *
 import copy
 
 class Node():
-	def __init__(self,mtx,score=0,parent=None,depth=0):
+	def __init__(self,mtx,score=0,parent=None,depth=0,builddepth=0):
 		self.mtx=mtx
+		self.depth=depth
 		self.totalSum=self.gettSum()
 		self.score=score
-		self.children=self.buildChildren(depth);
+		self.children=self.buildChildren(builddepth);
 		self.parentNode=parent
 		self.MaxTile=self.getMaxTile()
-		self.colorCount=self.getListTiles()
+		self.numberCount=self.getListTiles()
 		
 	def gettSum(self):
 		s=0
@@ -40,9 +41,9 @@ class Node():
 				for j in range(4):
 					if nmtx[i][j]==0:
 						nmtx[i][j]=2
-						l.append(Node(copy.deepcopy(nmtx),parent=self,depth=depth-1))
+						l.append(Node(copy.deepcopy(nmtx),parent=self,depth=self.depth+1,builddepth=depth-1))
 						nmtx[i][j]=4
-						l.append(Node(copy.deepcopy(nmtx),parent=self,depth=depth-1))
+						l.append(Node(copy.deepcopy(nmtx),parent=self,depth=self.depth+1,builddepth=depth-1))
 						nmtx[i][j]=0
 		return l
 
