@@ -17,12 +17,14 @@ def search(root,sum,maxdepth=2):
         l=list(root.children.keys())
         random.shuffle(l)
         for key in l:
-            possibleStates=root.children[key]
-            random.shuffle(possibleStates)
-            for i in range(len(possibleStates)):
+            random.shuffle(root.children[key])
+            for i in range(len(root.children[key])):
                 print(key)
-                if search(possibleStates[i],sum):
+                if search(root.children[key][i],sum):
+                    del root.children[key][i]
                     return True
+                else:
+                    del root.children[key][i]
         return False
 
 def insert_tile(mtx):
