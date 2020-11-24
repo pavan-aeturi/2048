@@ -19,7 +19,6 @@ class matrix():
 		self.u_score=0
 		self.l_score=0
 		self.r_score=0
-		self.presentNode=None
 		self.mtx=[[0 for i in range(4)] for _ in range(4)]
 		self.d_mtx=[[0 for i in range(4)] for _ in range(4)]
 		self.u_mtx=[[0 for i in range(4)] for _ in range(4)]

@@ -3,12 +3,13 @@ from moves import *
 import random
 from Tree import Tree
 
+
 def search(root,sum,maxdepth=2):
     print(root.mtx)
     if root.totalSum==sum:
         print("found")
         return True
-    if root.totalSum>sum:
+    if root.totalSum>sum or root.depth>=maxdepth:
         print("backtrack")
         return False
     else:
