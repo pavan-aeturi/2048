@@ -18,4 +18,4 @@ commands:
   python3 game.py
 
 
-![alt text](https://github.com/pavan-aeturi/2048/bob/main/simulation.gif?raw=true)
+![alt text](https://github.com/pavan-aeturi/2048/bob/master/simulation.gif?raw=true)
