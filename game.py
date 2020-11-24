@@ -69,14 +69,19 @@ def main(score,HighestScore,nextBestMove,window):
 			if event.type==pygame.KEYDOWN:
 				if event.key==pygame.K_LEFT:
 					Mtx.leftMove(window)
+					Mtx.bestMove()
 				elif event.key==pygame.K_RIGHT:
 					Mtx.rightMove(window)
+					Mtx.bestMove()
 				elif event.key==pygame.K_UP:
 					Mtx.upMove(window)
+					Mtx.bestMove()
 				elif event.key==pygame.K_DOWN:
 					Mtx.downMove(window)
+					Mtx.bestMove()
 				elif event.key==pygame.K_SPACE:
 					Mtx.restore(window)
+					Mtx.bestMove()
 			score.Number=Mtx.score
 			nextBestMove.Number=Mtx.nextBestMove
 			score.draw(window)

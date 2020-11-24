@@ -1,5 +1,6 @@
 from box import Tile
 from Node import Node
+import copy
 from moves import *
 import pygame
 import random
@@ -107,28 +108,24 @@ class matrix():
 	def leftMove(self,win):
 		self.mtx,self.score=self.l_mtx,self.l_score
 		self.checkAddandUpdate(win)
-		self.bestMove()
 		
 	def rightMove(self,win):
 		self.mtx,self.score=self.r_mtx,self.r_score
 		self.checkAddandUpdate(win)
-		self.bestMove()
-
+		
 	def upMove(self,win):
 		self.mtx,self.score=self.u_mtx,self.u_score
 		self.checkAddandUpdate(win)
-		self.bestMove()
-
+		
 	def downMove(self,win):
 		self.mtx,self.score=self.d_mtx,self.d_score
 		self.checkAddandUpdate(win)
-		self.bestMove()
-
+		
 	def bestMove(self):
-		self.l_mtx,self.l_score=getLeft(self.mtx,self.score)
-		self.r_mtx,self.r_score=getRight(self.mtx,self.score)
-		self.u_mtx,self.u_score=getUp(self.mtx,self.score)
-		self.d_mtx,self.d_score=getDown(self.mtx,self.score)
+		self.l_mtx,self.l_score=getLeft(copy.deepcopy(self.mtx),self.score)
+		self.r_mtx,self.r_score=getRight(copy.deepcopy(self.mtx),self.score)
+		self.u_mtx,self.u_score=getUp(copy.deepcopy(self.mtx),self.score)
+		self.d_mtx,self.d_score=getDown(copy.deepcopy(self.mtx),self.score)
 
 		l_sum = 0
 		l_nz = 0

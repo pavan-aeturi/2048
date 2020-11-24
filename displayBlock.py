@@ -23,8 +23,8 @@ class displayBlock():
 		pygame.draw.rect(win, self.background, (self.x,self.y,self.width,self.height),0,5)
 
 		if self.text != '':
-			font = pygame.font.SysFont('Clear Sans', self.textfontSize)
-			fontNum = pygame.font.SysFont('Clear Sans', self.numberfontSize)
+			font = pygame.font.SysFont('freesansbold', self.textfontSize)
+			fontNum = pygame.font.SysFont('freesansbold', self.numberfontSize)
 			textNum=fontNum.render(str(self.Number),1,self.NumberColor)
 			text = font.render(self.text, 1, self.textColor)
 			win.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)/4))

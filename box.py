@@ -29,7 +29,7 @@ class Tile():
         else:
         	FONT_COLOR=FONT_BCOLOR
         if self.Number != 0:
-            font = pygame.font.SysFont('Clear Sans', self.fontsize)
+            font = pygame.font.SysFont('freesansbold', self.fontsize)
             text = font.render(str(self.Number), 1,FONT_COLOR )
             win.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
         pygame.display.update()
