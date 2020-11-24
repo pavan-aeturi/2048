@@ -17,3 +17,5 @@ commands:
 
   python3 game.py
 
+
+![alt text](https://github.com/pavan-aeturi/2048/blob/master/simulate.gif?raw=true)
