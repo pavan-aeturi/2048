@@ -15,7 +15,9 @@ def search(root,sum,maxdepth=2):
         l=list(root.children.keys())
         random.shuffle(l)
         for key in l:
-            for i in range(len(root.children[key])):
+            possibleMoves=root.children[key]
+            random.shuffle(possibleMoves)
+            for i in range(len(possibleMoves)):
                 print(key)
                 if search(root.children[key][i],sum):
                     return True
