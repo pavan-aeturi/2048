@@ -20,7 +20,7 @@ commands:
   python3 game.py
 
 
-![alt text](https://github.com/pavan-aeturi/2048/blob/simulation.gif?raw=true)
+![alt text](https://github.com/pavan-aeturi/2048/blob/master/simulation.gif?raw=true)
 
 We have also implemented a simulation without GUI where the driver function uses Node,Tree classes to find the path to totalSum==8 and print it to the terminal
 
